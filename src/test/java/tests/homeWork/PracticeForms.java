@@ -1,0 +1,66 @@
+package tests.homeWork;
+
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.*;
+
+public class PracticeForms {
+
+    @BeforeAll
+    static void setUp() {
+        Configuration.browserSize = "1920x1080";
+        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.pageLoadStrategy = "eager";
+    }
+
+
+    @Test
+    void formPractice() {
+        //Открытие сайта
+        open("/automation-practice-form");
+        //Проверка заголовков
+        $(".practice-form-wrapper h5").shouldHave(text("Student Registration Form"));
+        //Ввод данных
+        $("#firstName").setValue("Aleksey");
+        $("#lastName").setValue("Alekseev");
+        $("#userEmail").setValue("user@mail.com");
+        //Поиск по тексту и клик
+        $("#genterWrapper").$(byText("Male")).click();
+        //Ввод данных
+        $("#userNumber").setValue("7900900900");
+        //Раскрытие календаря
+        $("#dateOfBirthInput").click();
+        //Поиск по тексту и клик
+        $(".react-datepicker__month-select").$(byText("September")).click();
+        $(".react-datepicker__year-select").$(byText("1994")).click();
+        //Опишу чуть позже
+        $$(".react-datepicker__day:not(.react-datepicker__day--outside-month)").findBy(text("26")).click();
+
+        //Ввод текста и нажатия энтера
+        $("#subjectsInput").setValue("Maths").pressEnter();
+        //Поиск по тексту и клик
+        $("#hobbiesWrapper").$(byText("Sports")).click();
+        //Добавление картинки
+        $("#uploadPicture").uploadFromClasspath("cat.png");
+
+        $("#currentAddress").setValue("Hello Street");
+        $("#react-select-3-input").setValue("NCR").pressEnter();
+        $("#react-select-4-input").setValue("Delhi").pressEnter();
+
+        $("#submit").click();
+
+
+        //Проверка заполненных данных
+        $("[aria-labelledby=example-modal-sizes-title-lg]").shouldHave(text("Thanks for submitting the form"));
+        $("#closeLargeModal").click();
+
+
+
+
+    }
+
+}
