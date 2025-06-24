@@ -1,9 +1,10 @@
-package tests.homeWork;
+package tests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -19,14 +20,19 @@ public class PracticeForms {
 
 
     @Test
-    void formPractice() {
+    void formPracticeTest() {
         //Открытие сайта
         open("/automation-practice-form");
         //Проверка заголовков
-        $(".practice-form-wrapper h5").shouldHave(text("Student Registration Form"));
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
+
+
+
         //Ввод данных
         $("#firstName").setValue("Aleksey");
-        $("#lastName").setValue("Alekseev");
+        $("#lastName").setValue("Danilov");
         $("#userEmail").setValue("user@mail.com");
         //Поиск по тексту и клик
         $("#genterWrapper").$(byText("Male")).click();
@@ -47,15 +53,18 @@ public class PracticeForms {
         //Добавление картинки
         $("#uploadPicture").uploadFromClasspath("cat.png");
 
-        $("#currentAddress").setValue("Hello Street");
-        $("#react-select-3-input").setValue("NCR").pressEnter();
-        $("#react-select-4-input").setValue("Delhi").pressEnter();
-
+        $("#currentAddress").setValue("Some address 1");
+        $("#state").click();
+        $("#stateCity-wrapper").$(byText("NCR")).click();
+        $("#city").click();
+        $("#stateCity-wrapper").$(byText("Delhi")).click();
         $("#submit").click();
 
 
         //Проверка заполненных данных
-        $("[aria-labelledby=example-modal-sizes-title-lg]").shouldHave(text("Thanks for submitting the form"));
+        $(".modal-dialog").should(appear);
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".table-responsive").shouldHave(text("Aleksey"),text("Danilov"));
         $("#closeLargeModal").click();
 
 
