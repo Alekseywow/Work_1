@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import page.components.CalendareComponent;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.executeJavaScript;
@@ -15,7 +16,15 @@ public class RegistrationPage {
             userEmailInput = $("#userEmail"),
             genderWrapper = $("#genterWrapper"),
             userPhoneInput = $("#userNumber"),
-            calendareInput = $("#dateOfBirthInput");
+            calendareInput = $("#dateOfBirthInput"),
+            subjectInput = $("#subjectsInput"),
+            hobbiesWrapper = $("#hobbiesWrapper"),
+            uploadPicture = $("#uploadPicture"),
+            currentAddress = $("#currentAddress"),
+            stateCity = $("#state"),
+            stateCityWrapper = $("#stateCity-wrapper"),
+            cityState = $("#city"),
+            submit = $("#submit");
 
 
     CalendareComponent calendareComponent = new CalendareComponent();
@@ -68,11 +77,66 @@ public class RegistrationPage {
         return this;
     }
 
+    public RegistrationPage setSubjectInput(String value) {
+        subjectInput.setValue(value).pressEnter();
+
+        return this;
+    }
+
+    public RegistrationPage setHobbiesWrapper(String value) {
+        hobbiesWrapper.$(byText(value)).click();
+
+        return this;
+    }
+
+    public RegistrationPage setUploadPicture(String value) {
+        uploadPicture.uploadFromClasspath(value);
+
+        return this;
+    }
+
+    public RegistrationPage setCurrentAddress(String value) {
+        currentAddress.setValue(value);
+
+        return this;
+    }
+
+    public RegistrationPage setStateCity(String value) {
+        stateCity.click();
+        stateCityWrapper.$(byText(value)).click();
+
+        return this;
+    }
+
+    public RegistrationPage setCityState(String value) {
+        cityState.click();
+        stateCityWrapper.$(byText(value)).click();
+
+        return this;
+    }
+
+    public RegistrationPage btnSubmit() {
+        submit.click();
+
+        return this;
+    }
+
+
+
+
     public RegistrationPage checkResult(String key, String value) {
         $(".table-responsive").$(byText(key)).parent()
                 .shouldHave(text(value));
 
         return this;
     }
+
+    public RegistrationPage negativeResult() {
+        $(".table-responsive").shouldNotHave(visible);
+
+        return this;
+    }
+
+
 
 }
