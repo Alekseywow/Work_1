@@ -1,71 +1,66 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import page.RegistrationPage;
-
-import static com.codeborne.selenide.Condition.appear;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import utils.TestData;
 
 public class RegistrationWithPageObject extends TestBase{
 
     RegistrationPage registrationPage = new RegistrationPage();
+    TestData testData = new TestData();
 
     @Test
     void formPracticeTest() {
 
         registrationPage.openPage()
-                .setFirstName("Aleksey")
-                .setLastName("Danilov")
-                .setUserEmail("user@mail.com")
-                .setGenderWrapper("Male")
-                .setUserNumber("7900900900")
-                .setDateOfBrith("26" , "September" , "1994")
-                .setSubjectInput("Maths")
-                .setHobbiesWrapper("Sports")
-                .setUploadPicture("cat.png")
-                .setCurrentAddress("Some address 1")
-                .setStateCity("NCR")
-                .setCityState("Delhi")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setUserEmail(testData.userEmail)
+                .setGenderWrapper(testData.genderWrapper)
+                .setUserNumber(testData.userPhone)
+                .setDateOfBrith(testData.brithData, testData.monthData, testData.yearData)
+                .setSubjectInput(testData.subjectInput)
+                .setHobbiesWrapper(testData.hobbiesWrapper)
+                .setUploadPicture(testData.imgPicture)
+                .setCurrentAddress(testData.currentAddress)
+                .setStateCity(testData.stateCity)
+                .setCityState(testData.cityState)
                 .btnSubmit();
 
 
-        registrationPage.checkResult("Student Name", "Aleksey  Danilov")
-                .checkResult("Student Email", "user@mail.com")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "7900900900")
-                .checkResult("Date of Birth", "26 September,1994")
-                .checkResult("Subjects", "Maths")
-                .checkResult("Hobbies", "Sports")
-                .checkResult("Picture", "cat.png")
-                .checkResult("Address", "Some address 1")
-                .checkResult("State and City", "NCR Delhi");
+        registrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Student Email", testData.userEmail)
+                .checkResult("Gender", testData.genderWrapper)
+                .checkResult("Mobile", testData.userPhone)
+                .checkResult("Date of Birth", testData.brithData + " " + testData.monthData + "," + testData.yearData)
+                .checkResult("Subjects", testData.subjectInput)
+                .checkResult("Hobbies", testData.hobbiesWrapper)
+                .checkResult("Picture", testData.imgPicture)
+                .checkResult("Address", testData.currentAddress)
+                .checkResult("State and City", testData.stateCity + " " + testData.cityState);
 
     }
 
     @Test
     void formMinPracticTest(){
         registrationPage.openPage()
-                .setFirstName("Aleksey")
-                .setLastName("Danilov")
-                .setGenderWrapper("Male")
-                .setUserNumber("7900900900")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setGenderWrapper(testData.genderWrapper)
+                .setUserNumber(testData.userPhone)
                 .btnSubmit();
 
-        registrationPage.checkResult("Student Name", "Aleksey  Danilov")
-                .checkResult("Gender", "Male")
-                .checkResult("Mobile", "7900900900");
+        registrationPage.checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Gender", testData.genderWrapper)
+                .checkResult("Mobile", testData.userPhone);
     }
 
     @Test
     void formNegativePracticTest() {
         registrationPage.openPage()
-                .setFirstName("Aleksey")
-                .setLastName("Danilov")
-                .setGenderWrapper("Male")
+                .setFirstName(testData.firstName)
+                .setLastName(testData.lastName)
+                .setGenderWrapper(testData.genderWrapper)
                 .btnSubmit();
 
         registrationPage.negativeResult();
