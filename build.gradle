@@ -8,8 +8,16 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testImplementation 'com.codeborne:selenide:7.0.2'
+    testImplementation(
+            "com.codeborne:selenide:7.5.1",
+            "org.junit.jupiter:junit-jupiter:5.10.0",
+            'org.slf4j:slf4j-simple:2.0.7',
+            'org.junit.jupiter:junit-jupiter:5.10.1',
+            'org.assertj:assertj-core:3.24.2',
+            'com.opencsv:opencsv:5.8',
+            'org.projectlombok:lombok:1.18.36'
+
+    )
 }
 
 test {
