@@ -10,8 +10,12 @@ repositories {
 dependencies {
     testImplementation(
             "com.codeborne:selenide:7.5.1",
-            "org.junit.jupiter:junit-jupiter:5.10.1" +
-                    ""
+            "org.junit.jupiter:junit-jupiter:5.10.1",
+            "com.codeborne:pdf-test:1.8.1",
+            "com.codeborne:xls-test:1.4.3",
+            "com.opencsv:opencsv:5.7.1",
+            "com.google.code.gson:gson:2.10.1"
+
 
     )
 }
